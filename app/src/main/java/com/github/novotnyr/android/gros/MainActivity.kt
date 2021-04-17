@@ -1,13 +1,12 @@
 package com.github.novotnyr.android.gros
 
-import android.Manifest
+import android.Manifest.permission.SEND_SMS
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
+import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 
 class MainActivity : AppCompatActivity() {
     private lateinit var payButton: Button
@@ -20,13 +19,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onPayButtonClick(view: View) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-            == PermissionChecker.PERMISSION_GRANTED
-        ) {
-            Log.i("Gros", "Permission granted. Sending SMS")
-            TODO("Send SMS")
-        } else {
-            TODO("Permission not granted. Will not send SMS")
+        when (checkSelfPermission(this, SEND_SMS)) {
+            PERMISSION_GRANTED -> TODO("Send SMS")
+            else -> TODO("Permission not granted. Will not send SMS")
         }
     }
 }
