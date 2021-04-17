@@ -4,11 +4,20 @@ import android.Manifest.permission.SEND_SMS
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 
 class MainActivity : AppCompatActivity() {
+    private val requestPermissionLauncher = registerForActivityResult(RequestPermission()) { isGranted ->
+        if (isGranted) {
+            TODO("Send SMS")
+        } else {
+            TODO("Permission not granted. Will not send SMS")
+        }
+    }
+
     private lateinit var payButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     fun onPayButtonClick(view: View) {
         when (checkSelfPermission(this, SEND_SMS)) {
             PERMISSION_GRANTED -> TODO("Send SMS")
-            else -> TODO("Permission not granted. Will not send SMS")
+            else -> requestPermissionLauncher.launch(SEND_SMS)
         }
     }
 }
