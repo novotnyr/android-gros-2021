@@ -3,6 +3,7 @@ package com.github.novotnyr.android.gros
 import android.Manifest.permission.SEND_SMS
 import android.os.Bundle
 import android.telephony.SmsManager
+import android.text.format.DateUtils
 import android.view.View
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
@@ -69,5 +70,18 @@ class MainActivity : AppCompatActivity() {
                 action.invoke()
             }
             .show()
+    }
+
+    private fun refreshButton() {
+        val lastPaymentDate = appPreferences.lastPaymentDate
+        if (lastPaymentDate.after(Date())) {
+            return
+        }
+        val period = DateUtils.getRelativeTimeSpanString(
+            lastPaymentDate.time,
+            Date().time,
+            DateUtils.SECOND_IN_MILLIS
+        )
+        payButton.text = period
     }
 }
