@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
 
     android:id="@+id/settingsFragment"
-    android:name="com.github.novotnyr.gros.SettingsFragment"
+    android:name="com.github.novotnyr.android.gros.SettingsFragment"
 
     tools:context=".SettingsActivity">
 
