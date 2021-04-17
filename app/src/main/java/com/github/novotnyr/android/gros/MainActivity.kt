@@ -32,7 +32,17 @@ class MainActivity : AppCompatActivity() {
     fun onPayButtonClick(view: View) {
         when (checkSelfPermission(this, SEND_SMS)) {
             PERMISSION_GRANTED -> sendSms()
-            else -> requestPermissionLauncher.launch(SEND_SMS)
+            else -> requestSmsPermission()
+        }
+    }
+
+    private fun requestSmsPermission() {
+        if (shouldShowRequestPermissionRationale(SEND_SMS)) {
+            snackBar("Groš potrebuje povolenie pre odosielanie SMS správ kvôli platbám") {
+                requestPermissionLauncher.launch(SEND_SMS)
+            }
+        } else {
+            requestPermissionLauncher.launch(SEND_SMS)
         }
     }
 
