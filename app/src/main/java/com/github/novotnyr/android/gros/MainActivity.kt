@@ -13,7 +13,7 @@ import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(RequestPermission()) { isGranted ->
         if (isGranted) {
-            TODO("Send SMS")
+            sendSms()
         } else {
             TODO("Permission not granted. Will not send SMS")
         }
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onPayButtonClick(view: View) {
         when (checkSelfPermission(this, SEND_SMS)) {
-            PERMISSION_GRANTED -> TODO("Send SMS")
+            PERMISSION_GRANTED -> sendSms()
             else -> requestPermissionLauncher.launch(SEND_SMS)
         }
     }
