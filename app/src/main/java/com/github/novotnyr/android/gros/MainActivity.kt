@@ -2,6 +2,8 @@ package com.github.novotnyr.android.gros
 
 import android.Manifest.permission.SEND_SMS
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.telephony.SmsManager
 import android.text.format.DateUtils
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(RequestPermission()) { isGranted ->
@@ -26,6 +29,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appPreferences: AppPreferences
 
+    private val periodicRefreshHandler = Handler(Looper.getMainLooper())
+
+    private val refreshTask = object: Runnable {
+        override fun run() {
+            refreshButton()
+            periodicRefreshHandler.postDelayed(this, 1000)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,6 +45,16 @@ class MainActivity : AppCompatActivity() {
         payButton = findViewById(R.id.payButton)
 
         appPreferences = AppPreferences(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        periodicRefreshHandler.postDelayed(refreshTask, 1000)
+    }
+
+    override fun onPause() {
+        periodicRefreshHandler.removeCallbacks(refreshTask)
+        super.onPause()
     }
 
     fun onPayButtonClick(view: View) {
@@ -54,11 +76,13 @@ class MainActivity : AppCompatActivity() {
 
     fun sendSms() {
         val smsManager = SmsManager.getDefault()
-        smsManager.sendTextMessage("5556",
+        smsManager.sendTextMessage(
+            "5556",
             null,
             "KE-123AB A4",
             null,
-            null);
+            null
+        );
 
         appPreferences.lastPaymentDate = Date()
     }
