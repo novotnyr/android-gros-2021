@@ -1,11 +1,14 @@
 package com.github.novotnyr.android.gros
 
 import android.Manifest.permission.SEND_SMS
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.telephony.SmsManager
 import android.text.format.DateUtils
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
@@ -55,6 +58,19 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         periodicRefreshHandler.removeCallbacks(refreshTask)
         super.onPause()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.settingsMenuItem) {
+            startActivity(Intent(this, SettingsActivity::class.java))
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun onPayButtonClick(view: View) {
