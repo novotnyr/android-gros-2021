@@ -1,8 +1,9 @@
 package com.github.novotnyr.android.gros
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var payButton: Button
@@ -13,4 +14,6 @@ class MainActivity : AppCompatActivity() {
 
         payButton = findViewById(R.id.payButton)
     }
+
+    fun onPayButtonClick(view: View) {}
 }

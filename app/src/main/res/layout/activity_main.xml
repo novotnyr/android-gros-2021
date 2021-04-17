@@ -14,6 +14,8 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
 
+        android:onClick="onPayButtonClick"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
