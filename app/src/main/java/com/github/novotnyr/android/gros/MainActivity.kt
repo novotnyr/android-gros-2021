@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestPermissi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(RequestPermission()) { isGranted ->
@@ -44,4 +45,12 @@ class MainActivity : AppCompatActivity() {
             null);
     }
 
+    fun snackBar(message: String, action: () -> Unit) {
+        val rootView = findViewById<View>(android.R.id.content)
+        Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+            .setAction("OK") {
+                action.invoke()
+            }
+            .show()
+    }
 }
