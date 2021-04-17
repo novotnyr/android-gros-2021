@@ -2,6 +2,7 @@ package com.github.novotnyr.android.gros
 
 import android.Manifest.permission.SEND_SMS
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.view.View
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
@@ -33,4 +34,14 @@ class MainActivity : AppCompatActivity() {
             else -> requestPermissionLauncher.launch(SEND_SMS)
         }
     }
+
+    fun sendSms() {
+        val smsManager = SmsManager.getDefault()
+        smsManager.sendTextMessage("5556",
+            null,
+            "KE-123AB A4",
+            null,
+            null);
+    }
+
 }
