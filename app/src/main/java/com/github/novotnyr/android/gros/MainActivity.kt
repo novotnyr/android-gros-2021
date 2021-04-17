@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(RequestPermission()) { isGranted ->
@@ -22,11 +23,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var payButton: Button
 
+    private lateinit var appPreferences: AppPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         payButton = findViewById(R.id.payButton)
+
+        appPreferences = AppPreferences(this)
     }
 
     fun onPayButtonClick(view: View) {
@@ -53,6 +58,8 @@ class MainActivity : AppCompatActivity() {
             "KE-123AB A4",
             null,
             null);
+
+        appPreferences.lastPaymentDate = Date()
     }
 
     fun snackBar(message: String, action: () -> Unit) {
