@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         if (isGranted) {
             sendSms()
         } else {
-            TODO("Permission not granted. Will not send SMS")
+            snackBar("Povolenie posielať platby cez SMS nebolo pridelené", {})
         }
     }
 
