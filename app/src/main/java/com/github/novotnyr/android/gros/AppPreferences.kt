@@ -19,4 +19,10 @@ class AppPreferences(context: Context) {
         set(value) = preferences.edit {
             putLong(LAST_PAYMENT, value.time)
         }
+
+    val phoneNumber: String
+        get() = preferences.getString("phone", "5556")!!
+
+    val text: String
+        get() = preferences.getString("message", "KE-123AB A4")!!
 }
