@@ -93,12 +93,12 @@ class MainActivity : AppCompatActivity() {
     fun sendSms() {
         val smsManager = SmsManager.getDefault()
         smsManager.sendTextMessage(
-            "5556",
+            appPreferences.phoneNumber,
             null,
-            "KE-123AB A4",
+            appPreferences.text,
             null,
             null
-        );
+        )
 
         appPreferences.lastPaymentDate = Date()
     }
